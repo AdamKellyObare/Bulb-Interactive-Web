@@ -1,0 +1,142 @@
+
+<app-slider></app-slider>
+
+
+<section class="py-10 lg:py-20">
+  <div class="container">
+    <div class="w-full text-center mb-14">
+      <h1 class="section-title text-black">Upcoming Events</h1>
+    </div>
+
+    <div
+      class="filter-content w-full grid gap-5 xs:grid-cols-2 xs:gap-4 lg:grid-cols-4 lg:gap-5"
+    >
+      <div
+        class="border-2 overflow-hidden relative rounded"
+        data-category="mobile"
+        *ngFor="let item of [1, 2]"
+      >
+        <a
+          href="https://bulb.fameve.events/events/holiday-travel_38zydz"
+          class="absolute top-0 left-0 w-full h-full z-[2]"
+        ></a>
+        <div class="w-full">
+          <img
+            alt=""
+            src="https://fc-cdn.fameve.com/floral_credit_f50f/e93d0238-8635-4321-bc87-6d13a537c19b.jpg"
+            class="object-cover w-full h-full"
+          />
+        </div>
+        <div class="px-4 py-3 flex justify-between">
+          <div class="flex-1">
+            <h5 class="text-sm font-medium">Auto & Parts
+            </h5>
+            <p class="text-sm text-muted dark:text-white/50">16/10/2024</p>
+          </div>
+          <div class="mt-3">
+            <a
+              href="https://bulb.fameve.events/events/holiday-travel_38zydz"
+              class="align-middle select-none font-sans font-bold text-center border-2 border-[#FEAC16] uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 px-3 rounded-lg bg-white text-black hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+              type="button"
+            >
+              Buy Tickets
+          </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="border-2 overflow-hidden relative rounded"
+        data-category="mobile"
+        *ngFor="let item of [1, 2]"
+      >
+        <a
+          href="https://bulb.fameve.events/events/holiday-travel_38zydz"
+          class="absolute top-0 left-0 w-full h-full z-[2]"
+        ></a>
+        <div class="w-full">
+          <img
+            alt=""
+            src="https://fc-cdn.fameve.com/floral_credit_f50f/ab0a09b8-7bb6-4c0e-ab0e-eaa85d746c6c.png"
+            class="object-cover w-full h-full"
+          />
+        </div>
+        <div class="px-4 py-3 flex justify-between">
+          <div class="flex-1">
+            <h5 class="text-sm font-medium">Auto & Parts
+            </h5>
+            <p class="text-sm text-muted dark:text-white/50">31/10/2024</p>
+          </div>
+          <div class="mt-3">
+            <a
+              href="https://bulb.fameve.events/events/family-business-growth-succession_49uuh8"
+              class="align-middle select-none font-sans font-bold text-center border-2 border-[#FEAC16] uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 px-3 rounded-lg bg-white text-black hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+              type="button"
+            >
+              Buy Tickets
+          </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="flex justify-center mb-3">
+  <button
+    routerLink="/events"
+    class="align-middle select-none font-sans font-bold text-center border-2 border-black uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-2 px-3 rounded-lg bg-white text-black hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+    type="button"
+  >
+    All Events
+  </button>
+</div>
+
+<!-- Start of bulb description section -->
+<section class="py-10 lg:py-32 bg-blue-50">
+  <div class="container md:flex">
+    <img
+      alt=""
+      src="/assets/images/bulb.jpg"
+      class="rounded-lg w-full mb-10 md:w-1/3 md:mb-0 md:object-cover md:object-center"
+    />
+    <div
+      class="md:w-2/3 md:pl-6 lg:pl-10 lg:self-center rtl:md:pl-0 rtl:md:pr-6"
+    >
+      <h3 class="section-subtitle text-primary">About Us</h3>
+
+      <p class="text-slate-700 mb-6">
+        We Create a Platform for Entrepreneurs, Business Owners and Corporate
+        Professionals to Network and Promote their Businesses. At Bulb
+        Interactive, we've crafted a dynamic platform tailored for the visionary
+        minds of entrepreneurs, the strategic acumen of business owners, and the
+        seasoned expertise of corporate professionals. Our mission is to create
+        a thriving ecosystem where connections flourish, and businesses are
+        propelled to new heights.
+      </p>
+
+      <p class="lg:flex-1">
+        We understand that networking is the lifeblood of success in today's
+        fast-paced business landscape. Therefore, Bulb Interactive serves as the
+        conduit for like-minded individuals to come together, exchange insights,
+        and forge meaningful partnerships. Whether you're a budding entrepreneur
+        with a groundbreaking concept, a seasoned business owner seeking
+        expansion opportunities, or a corporate professional aiming to connect
+        with industry leaders, Bulb Interactive is your dedicated space for
+        growth and collaboration.
+      </p>
+      <p class="lg:flex-1">
+        Join us in cultivating a vibrant community where ideas resonate,
+        collaborations thrive, and businesses shine. Let Bulb Interactive be the
+        catalyst for your professional journey, lighting up the path to success.
+        Together, let's illuminate the future of business
+      </p>
+    </div>
+  </div>
+</section>
+
+
+
+
+<app-links></app-links>
+<app-video-slider></app-video-slider>
+<app-reviews></app-reviews>

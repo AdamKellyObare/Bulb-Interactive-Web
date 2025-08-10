@@ -1,0 +1,50 @@
+
+{{- if .Values.aws.iamRoleArn}}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.appName }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.appName }}
+    app.kubernetes.io/part-of: {{ .Values.appName }}
+  annotations:
+    eks.amazonaws.com/role-arn: {{.Values.aws.iamRoleArn}}
+---
+{{- end}}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  replicas: 1 
+  template: 
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+    spec:
+      serviceAccountName: {{ .Values.appName }}
+      containers:
+      - name: {{ .Values.appName }}
+        image: {{ .Values.image }}
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: {{ .Values.resources.requests.memory }}
+            cpu: {{ .Values.resources.requests.cpu }}
+          limits:
+            memory: {{ .Values.resources.limits.memory }}
+            cpu: {{ .Values.resources.limits.cpu }}
+        env:
+          {{- range $key, $value := .Values.env.direct_env }}
+          - name: {{ $key }}
+            value: {{ $value }}
+          {{- end}}
+          {{- range $key, $value := .Values.env.direct }}
+          - name: {{ $key }}
+            value: {{ $value }}
+          {{- end}}

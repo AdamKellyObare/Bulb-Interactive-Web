@@ -1,0 +1,24 @@
+.featured-carousel html {
+  scroll-behavior: smooth;
+}
+* {
+  box-sizing: border-box;
+}
+.featured-carousel .row::-webkit-scrollbar{
+  display: none;
+}
+.featured-carousel .row__inner {
+  transition: 450ms transform;
+  font-size: 0;
+  white-space: nowrap;
+}
+.featured-carousel .row__inner:hover .tile {
+  opacity: 0.8;
+}
+.featured-carousel .row__inner:hover .tile:hover {
+  transform: scale(1.02);
+  opacity: 1;
+}
+.featured-carousel .tile:hover ~ .tile {
+  transform: translate3d(5px, 5px, 5px);
+}

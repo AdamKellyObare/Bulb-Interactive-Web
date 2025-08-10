@@ -1,0 +1,35 @@
+
+name: Deploy to Amazon EKS PROD
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+    paths-ignore:
+      - .github/workflows/deploy-ci.yaml
+      - Dockerfile.Package
+      
+jobs:
+  deploy:
+    name: Build and Release
+    if: startsWith(github.ref, 'refs/tags/v')
+    uses: fameve-cloud/fc-shared-gh-workflows/.github/workflows/wf-deploy-service.yaml@v0.1.14
+    with:
+      SERVICE_NAME: "bulb-web"
+      ECR_REPOSITORY: "fc-shared-ecr-registry"
+      USE_ECR_IMAGE: true
+      HAS_TERRAFORM: false
+      HAS_PREDEPLOY_SCRIPT: true
+      TEAM_NAME: "hosting"
+      TF_WORKSPACE: "hosting-prod"
+      ENV: "prod"
+    secrets:
+      TF_API_TOKEN: ${{ secrets.TF_API_TOKEN }}
+      TF_ORG_TOKEN: ${{ secrets.TF_ORG_TOKEN }}
+      FC_GH_ACTIONS: ${{ secrets.FC_GH_ACTIONS }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      SSH_PRIVATE_KEY: ${{ secrets.GH_SSH_PRIVATE_KEY }}

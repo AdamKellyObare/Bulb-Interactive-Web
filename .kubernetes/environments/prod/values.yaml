@@ -1,0 +1,8 @@
+appName: APP_NAME
+image: CONTAINER_IMAGE
+namespace: K8S_NAMESPACE
+hosts:
+  - www.bulb.co.ke
+env:
+  direct_env:
+    works: "sample"

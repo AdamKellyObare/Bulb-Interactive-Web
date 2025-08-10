@@ -1,0 +1,61 @@
+<div class="container-fluid" *ngIf="featuredProducts && featuredProducts.length > 0">
+  <div class="row">
+      <ngx-slick-carousel class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
+          <div ngxSlickItem class="featured-img" *ngFor="let product of featuredProducts">
+             <img loading="lazy"  [src]="product.acf.featured_banner.url" alt="{{ product.title.rendered }} image">
+          </div>
+      </ngx-slick-carousel>
+  </div>
+</div>
+
+<div class="container">
+    <div class="row">
+            <div class="par">
+                <h6>PARTNERS</h6>
+            </div>
+            <ngx-slick-carousel class="carousel" #sliderElement="slick-carousel" [config]="slideConfig">
+                <div class="partner-slider">
+                    <div class="slide-track" #sliderElement>
+                        <div class="slide" *ngFor="let logo of companyLogos">
+                           <img loading="lazy"  [src]="logo.url" alt="partner logo" />
+                        </div>
+                    </div>
+                </div>
+            </ngx-slick-carousel>
+    </div>
+    <div class="row">
+        <div class="filter">
+            <div class="tabs">
+                <input type="radio" *ngFor="let category of categories; let i = index;" [id]="'radio-' + i" name="tabs" />
+                <label class="tab" *ngFor="let category of categories; let i = index;" [for]="'radio-' + i">{{ category }}</label>
+                <span class="glider"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-4">
+        <div class="col p-4" *ngFor="let product of products">
+            <div class="wrap">
+                <div class="cont">
+                  <div class="top">
+                   <img loading="lazy"  [src]="product.acf.product_image.sizes.medium_large ? product.acf.product_image.sizes.medium_large : product.acf.product_image.sizes.large" alt="">
+                  </div>
+                  <div class="bottom">
+                    <div class="left">
+                      <div class="details">
+                        <h1>{{ product.title.rendered }}</h1>
+                        <!-- <p></p> -->
+                      </div>
+                      <div class="buy"><i class="fa-brands fa-whatsapp"></i></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="inside">
+                  <div class="icon"><i class="fa-solid fa-info"></i></div>
+                  <div class="contents">
+                    <div [innerHTML]="product.content.rendered"></div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>

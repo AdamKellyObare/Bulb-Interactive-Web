@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://bulb.co.ke/sitemap.xml
+Sitemap: https://bulb.co.ke/ror.xml

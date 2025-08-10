@@ -1,0 +1,108 @@
+<div class="container margin_both">
+    <h2 class="tile_head">Latest videos</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3">
+        <div class="col">
+            <div class="tile_video">
+                <div class="tile_media_video">
+                  <iframe class="object-fit-cover video-slider tile__img" width="100%" height="100%" src="https://www.youtube.com/embed/o-daKy-Oj5I" title="Bulb Interactive Events" frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+        </div>
+        <div class="col">
+            <div class="tile_video">
+                <div class="tile_media_video">
+                  <iframe class="object-fit-cover video-slider tile__img" width="100%" height="100%" src="https://www.youtube.com/embed/4CHUJUL_daE" title="Bulb Interactive Events" frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+        </div>
+        <div class="col">
+            <div class="tile_video">
+                <div class="tile_media_video">
+                  <iframe class="object-fit-cover video-slider tile__img" width="100%" height="100%" src="https://www.youtube.com/embed/tiQBNU-tLMY" title="Bulb Interactive Events" frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+        </div>
+        <div class="col">
+            <div class="tile_video">
+                <div class="tile_media_video">
+                  <iframe class="object-fit-cover video-slider tile__img" width="100%" height="100%" src="https://www.youtube.com/embed/cAzqcQn9D0g" title="Bulb Interactive Events" frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+        </div>
+        <div class="col">
+            <div class="tile_video">
+                <div class="tile_media_video">
+                  <iframe class="object-fit-cover video-slider tile__img" width="100%" height="100%" src="https://www.youtube.com/embed/-cG1FkIuR-g" title="Bulb Interactive Events" frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+        </div>
+        <div class="col">
+            <div class="tile_video">
+                <div class="tile_media_video">
+                  <iframe class="object-fit-cover video-slider tile__img" width="100%" height="100%" src="https://www.youtube.com/embed/HCUb5kU63D8" title="Bulb Interactive Events" frameborder="0" allowfullscreen></iframe>
+                </div>
+              </div>
+        </div>
+    </div>
+
+
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-lg-3">
+      <div class="col custom_btn">
+        <button type="button" class="btn btnEdit shadow dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> <span>Filter</span> </button>
+        <ul class="dropdown-menu">        
+            <button type="button" class="btn" (click)="filterVideos('all')">Show all</button>
+            <button type="button" class="btn" (click)="filterVideos('tech')">Tech</button>
+            <button type="button" class="btn" (click)="filterVideos('design')">Design</button>
+            <button type="button" class="btn" (click)="filterVideos('networking')">Networking</button>
+        </ul>
+      </div>
+
+      <div class="col filter hide tech">
+          <div class="tile_video">
+              <div class="tile_media_video">
+                <iframe class="object-fit-cover video-slider tile__img" width="100%" height="100%" src="https://www.youtube.com/embed/o-daKy-Oj5I" title="Bulb Interactive Events" frameborder="0" allowfullscreen></iframe>
+              </div>
+            </div>
+      </div>
+      <div class="col filter hide tech">
+          <div class="tile_video">
+              <div class="tile_media_video">
+                <iframe class="object-fit-cover video-slider tile__img" width="100%" height="100%" src="https://www.youtube.com/embed/4CHUJUL_daE" title="Bulb Interactive Events" frameborder="0" allowfullscreen></iframe>
+              </div>
+            </div>
+      </div>
+      <div class="col filter hide networking">
+          <div class="tile_video">
+              <div class="tile_media_video">
+                <iframe class="object-fit-cover video-slider tile__img" width="100%" height="100%" src="https://www.youtube.com/embed/tiQBNU-tLMY" title="Bulb Interactive Events" frameborder="0" allowfullscreen></iframe>
+              </div>
+            </div>
+      </div>
+      <div class="col filter hide networking">
+          <div class="tile_video">
+              <div class="tile_media_video">
+                <iframe class="object-fit-cover video-slider tile__img" width="100%" height="100%" src="https://www.youtube.com/embed/cAzqcQn9D0g" title="Bulb Interactive Events" frameborder="0" allowfullscreen></iframe>
+              </div>
+            </div>
+      </div>
+      <div class="col filter hide design">
+          <div class="tile_video">
+              <div class="tile_media_video">
+                <iframe class="object-fit-cover video-slider tile__img" width="100%" height="100%" src="https://www.youtube.com/embed/-cG1FkIuR-g" title="Bulb Interactive Events" frameborder="0" allowfullscreen></iframe>
+              </div>
+            </div>
+      </div>
+      <div class="col filter hide design">
+          <div class="tile_video">
+              <div class="tile_media_video">
+                <iframe class="object-fit-cover video-slider tile__img" width="100%" height="100%" src="https://www.youtube.com/embed/HCUb5kU63D8" title="Bulb Interactive Events" frameborder="0" allowfullscreen></iframe>
+              </div>
+            </div>
+      </div>
+  </div>
+    
+    
+    
+</div>
+ <!-- the magazine should open in the same page  -->
