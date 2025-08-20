@@ -1,0 +1,256 @@
+<div class="networking-platform">
+  <div class="platform-header">
+    <h2>Business Networking Platform</h2>
+    <div class="user-info" *ngIf="currentUser">
+      <span class="membership-badge" [class]="currentUser.membershipType">
+        {{currentUser.membershipType | titlecase}} Member
+      </span>
+      <span class="user-name">{{currentUser.name}}</span>
+    </div>
+  </div>
+
+  <!-- Membership Upgrade Section -->
+  <div class="membership-section" *ngIf="currentUser?.membershipType === 'free'">
+    <h3>Upgrade Your Membership</h3>
+    <p>Get access to exclusive networking features and discounts!</p>
+    
+    <div class="membership-plans">
+      <div *ngFor="let plan of membershipPlans" class="membership-plan">
+        <h4>{{plan.name}}</h4>
+        <div class="price">KES {{plan.price}}<span>/{{plan.duration}}</span></div>
+        <ul class="benefits">
+          <li *ngFor="let benefit of plan.benefits">{{benefit}}</li>
+        </ul>
+        <button class="btn btn-primary" (click)="upgradeMembership(plan.type)">
+          Upgrade to {{plan.name}}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Platform Content -->
+  <div class="platform-content" *ngIf="currentUser?.membershipType !== 'free'">
+    <div class="tabs">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" data-bs-toggle="tab" href="#discover">Discover</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#connections">My Connections</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#events">Event Networking</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#profile">My Profile</a>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <!-- Discover Tab -->
+        <div class="tab-pane fade show active" id="discover">
+          <div class="discover-section">
+            <div class="search-bar">
+              <input 
+                type="text" 
+                [(ngModel)]="searchQuery" 
+                (keyup.enter)="searchProfiles()"
+                placeholder="Search professionals by name, company, or industry..."
+                class="form-control">
+              <button class="btn btn-primary" (click)="searchProfiles()">Search</button>
+            </div>
+
+            <div class="search-results" *ngIf="searchResults.length > 0">
+              <h4>Search Results</h4>
+              <div class="profile-grid">
+                <div *ngFor="let profile of searchResults" class="profile-card">
+                  <div class="profile-image">
+                    <img [src]="profile.profileImage || '/assets/images/default-avatar.png'" [alt]="profile.name">
+                  </div>
+                  <div class="profile-info">
+                    <h5>{{profile.name}}</h5>
+                    <p class="company">{{profile.company}}</p>
+                    <p class="industry">{{profile.industry}}</p>
+                    <div class="interests">
+                      <span *ngFor="let interest of profile.interests" class="interest-tag">{{interest}}</span>
+                    </div>
+                  </div>
+                  <div class="profile-actions">
+                    <button class="btn btn-outline-primary" (click)="sendConnectionRequest(profile.id)">
+                      Connect
+                    </button>
+                    <button class="btn btn-secondary" (click)="startChat(profile.id)">
+                      Message
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Connections Tab -->
+        <div class="tab-pane fade" id="connections">
+          <div class="connections-section">
+            <h4>My Connections ({{connections.length}})</h4>
+            
+            <!-- Pending Requests -->
+            <div class="pending-requests" *ngIf="hasPendingRequests()">
+              <h5>Pending Requests</h5>
+              <div class="request-list">
+                <ng-container *ngFor="let connection of connections">
+                  <div class="request-item" *ngIf="connection.status === 'pending'">
+                    <div class="request-info">
+                      <span class="name">{{connection.connectedUser?.name}}</span>
+                      <span class="company">{{connection.connectedUser?.company}}</span>
+                    </div>
+                    <div class="request-actions">
+                      <button class="btn btn-success btn-sm" (click)="acceptConnectionRequest(connection.id)">
+                        Accept
+                      </button>
+                      <button class="btn btn-outline-secondary btn-sm" (click)="declineConnectionRequest(connection.id)">
+                        Decline
+                      </button>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <!-- Accepted Connections -->
+            <div class="accepted-connections">
+              <h5>My Network</h5>
+              <div class="connection-grid">
+                <ng-container *ngFor="let connection of connections">
+                  <div class="connection-card" *ngIf="connection.status === 'accepted'">
+                    <div class="connection-image">
+                      <img [src]="connection.connectedUser?.profileImage || '/assets/images/default-avatar.png'" 
+                           [alt]="connection.connectedUser?.name">
+                    </div>
+                    <div class="connection-info">
+                      <h6>{{connection.connectedUser?.name}}</h6>
+                      <p>{{connection.connectedUser?.company}}</p>
+                      <small>Connected {{connection.acceptedAt | date:'shortDate'}}</small>
+                    </div>
+                    <div class="connection-actions">
+                      <!-- Fixed startChat call by checking for undefined -->
+                      <button class="btn btn-sm btn-primary" 
+                              *ngIf="connection.connectedUserId"
+                              (click)="startChat(connection.connectedUserId)">
+                        Message
+                      </button>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Event Networking Tab -->
+        <div class="tab-pane fade" id="events">
+          <div class="event-networking">
+            <h4>Event Networking</h4>
+            <p>Connect with other attendees at events you're registered for.</p>
+            
+            <div class="event-list">
+              <div class="event-item">
+                <h5>Upcoming Business Forum</h5>
+                <p>Date: March 15, 2024</p>
+                <button class="btn btn-primary" (click)="joinEventNetworking('event-1')">
+                  Join Event Networking
+                </button>
+              </div>
+            </div>
+
+            <!-- Event Attendees -->
+            <div class="event-attendees" *ngIf="selectedEvent">
+              <h5>Event Attendees</h5>
+              <div class="attendee-grid">
+                <div *ngFor="let attendee of eventAttendees" class="attendee-card">
+                  <img [src]="attendee.profileImage || '/assets/images/default-avatar.png'" [alt]="attendee.name">
+                  <h6>{{attendee.name}}</h6>
+                  <p>{{attendee.company}}</p>
+                  <button class="btn btn-sm btn-outline-primary" (click)="sendConnectionRequest(attendee.id)">
+                    Connect
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Tab -->
+        <div class="tab-pane fade" id="profile">
+          <div class="profile-section" *ngIf="userProfile">
+            <h4>My Profile</h4>
+            
+            <form class="profile-form">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" [(ngModel)]="userProfile.name" name="name" class="form-control">
+              </div>
+              
+              <div class="form-group">
+                <label>Company</label>
+                <input type="text" [(ngModel)]="userProfile.company" name="company" class="form-control">
+              </div>
+              
+              <div class="form-group">
+                <label>Industry</label>
+                <input type="text" [(ngModel)]="userProfile.industry" name="industry" class="form-control">
+              </div>
+              
+              <div class="form-group">
+                <label>Bio</label>
+                <textarea [(ngModel)]="userProfile.bio" name="bio" class="form-control" rows="4"></textarea>
+              </div>
+              
+              <!-- Fixed Interests input -->
+              <div class="form-group">
+                <label>Interests (comma-separated)</label>
+                <input #interestsInput type="text" [value]="userProfile.interests.join(', ')"
+                       (blur)="updateInterests(interestsInput.value)" class="form-control">
+                <!-- Added #interestsInput template reference variable to avoid $event.typecast errors -->
+              </div>
+              
+              <!-- Fixed Social Links inputs -->
+              <div class="form-group">
+                <label>LinkedIn URL</label>
+                <input #linkedinInput type="url" [value]="userProfile.socialLinks?.linkedin || ''"
+                       (blur)="updateSocialLink('linkedin', linkedinInput.value)" class="form-control">
+                <!-- #linkedinInput reference added -->
+              </div>
+              
+              <div class="form-group">
+                <label>Twitter URL</label>
+                <input #twitterInput type="url" [value]="userProfile.socialLinks?.twitter || ''"
+                       (blur)="updateSocialLink('twitter', twitterInput.value)" class="form-control">
+                <!-- #twitterInput reference added -->
+              </div>
+              
+              <div class="form-group">
+                <label>Website URL</label>
+                <input #websiteInput type="url" [value]="userProfile.socialLinks?.website || ''"
+                       (blur)="updateSocialLink('website', websiteInput.value)" class="form-control">
+                <!-- #websiteInput reference added -->
+              </div>
+              
+              <button type="button" class="btn btn-primary" (click)="updateProfile()">
+                Update Profile
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Free Membership Message -->
+  <div class="free-member-message" *ngIf="currentUser?.membershipType === 'free'">
+    <div class="message-content">
+      <h3>Unlock Premium Networking Features</h3>
+      <p>Upgrade your membership to connect with professionals, access exclusive events, and grow your business network.</p>
+    </div>
+  </div>
+</div>

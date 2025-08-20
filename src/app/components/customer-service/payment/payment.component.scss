@@ -1,0 +1,316 @@
+.payment-component {
+  max-width: 500px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  overflow: hidden;
+
+  .payment-header {
+    background: linear-gradient(135deg, #2A3181 0%, #00BAF2 100%);
+    color: white;
+    padding: 25px;
+    text-align: center;
+
+    h3 {
+      margin: 0 0 15px 0;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .amount-display {
+      font-size: 32px;
+      font-weight: 700;
+
+      .currency {
+        font-size: 20px;
+        opacity: 0.8;
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .payment-methods {
+    padding: 25px;
+    border-bottom: 1px solid #e9ecef;
+
+    h4 {
+      margin-bottom: 20px;
+      color: #2A3181;
+      font-size: 18px;
+    }
+
+    .method-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      .method-option {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+          border-color: #00BAF2;
+          background-color: #f8f9ff;
+        }
+
+        &.selected {
+          border-color: #00BAF2;
+          background-color: #f8f9ff;
+          box-shadow: 0 0 0 3px rgba(0,186,242,0.1);
+        }
+
+        .method-icon {
+          width: 50px;
+          height: 40px;
+          margin-right: 15px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+          }
+        }
+
+        .method-info {
+          flex: 1;
+
+          h5 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+            color: #2A3181;
+          }
+
+          p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+          }
+        }
+      }
+    }
+  }
+
+  .payment-form {
+    padding: 25px;
+
+    .form-group {
+      margin-bottom: 20px;
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #333;
+        font-size: 14px;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+
+        &:focus {
+          outline: none;
+          border-color: #00BAF2;
+          box-shadow: 0 0 0 3px rgba(0,186,242,0.1);
+        }
+
+        &::placeholder {
+          color: #adb5bd;
+        }
+      }
+
+      .form-text {
+        font-size: 12px;
+        color: #666;
+        margin-top: 5px;
+      }
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 15px;
+    }
+
+    .mpesa-form {
+      .form-group {
+        position: relative;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 45px;
+          left: 15px;
+          width: 20px;
+          height: 15px;
+          background: url('/assets/images/kenya-flag.png') no-repeat center;
+          background-size: contain;
+          z-index: 1;
+        }
+
+        .form-control {
+          padding-left: 45px;
+        }
+      }
+    }
+
+    .card-form {
+      .form-control {
+        font-family: 'Courier New', monospace;
+      }
+    }
+
+    .paypal-form {
+      .paypal-info {
+        background-color: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 6px;
+        padding: 15px;
+        text-align: center;
+
+        p {
+          margin: 0;
+          color: #856404;
+        }
+      }
+    }
+
+    .payment-description {
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 25px;
+
+      h5 {
+        margin: 0 0 8px 0;
+        color: #2A3181;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      p {
+        margin: 0;
+        color: #666;
+      }
+    }
+
+    .payment-actions {
+      margin-bottom: 20px;
+
+      .payment-btn {
+        width: 100%;
+        padding: 15px;
+        font-size: 18px;
+        font-weight: 600;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover:not(:disabled) {
+          background: linear-gradient(135deg, #218838 0%, #1ea085 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 5px 15px rgba(40,167,69,0.3);
+        }
+
+        &:disabled {
+          background: #6c757d;
+          cursor: not-allowed;
+          transform: none;
+          box-shadow: none;
+        }
+
+        i {
+          margin-right: 8px;
+        }
+
+        .fa-spinner {
+          animation: spin 1s linear infinite;
+        }
+      }
+    }
+
+    .security-notice {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #28a745;
+      font-size: 14px;
+
+      i {
+        margin-right: 8px;
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+  .payment-component {
+    margin: 10px;
+    border-radius: 8px;
+
+    .payment-header {
+      padding: 20px;
+
+      h3 {
+        font-size: 20px;
+      }
+
+      .amount-display {
+        font-size: 28px;
+      }
+    }
+
+    .payment-methods,
+    .payment-form {
+      padding: 20px;
+    }
+
+    .method-options {
+      .method-option {
+        padding: 12px;
+
+        .method-icon {
+          width: 40px;
+          height: 30px;
+          margin-right: 12px;
+        }
+
+        .method-info {
+          h5 {
+            font-size: 14px;
+          }
+
+          p {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+}

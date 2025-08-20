@@ -1,0 +1,224 @@
+<div class="customer-service-container">
+  <div class="header">
+    <h2>Customer Service Dashboard</h2>
+    <div class="actions">
+      <button class="btn btn-primary" (click)="exportCustomers('csv')">Export CSV</button>
+      <button class="btn btn-secondary" (click)="exportCustomers('excel')">Export Excel</button>
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="search-box">
+      <input 
+        type="text" 
+        [(ngModel)]="searchQuery" 
+        (keyup.enter)="searchCustomers()"
+        placeholder="Search customers..."
+        class="form-control">
+      <button class="btn btn-outline-primary" (click)="searchCustomers()">Search</button>
+    </div>
+    
+    <select [(ngModel)]="filterStatus" (change)="filterCustomers()" class="form-select">
+      <option value="all">All Customers</option>
+      <option value="lead">Leads</option>
+      <option value="prospect">Prospects</option>
+      <option value="customer">Customers</option>
+      <option value="inactive">Inactive</option>
+    </select>
+  </div>
+
+  <div class="main-content">
+    <div class="customer-list">
+      <h3>Customers ({{customers.length}})</h3>
+      <div class="customer-cards">
+        <div 
+          *ngFor="let customer of customers" 
+          class="customer-card"
+          [class.selected]="selectedCustomer?.id === customer.id"
+          (click)="selectCustomer(customer)">
+          <div class="customer-info">
+            <h4>{{customer.name}}</h4>
+            <p>{{customer.email}}</p>
+            <p>{{customer.company}}</p>
+            <span class="status-badge" [class]="customer.status">{{customer.status}}</span>
+          </div>
+          <div class="customer-stats">
+            <small>Events: {{customer.eventsAttended.length}}</small>
+            <small>Spent: KES {{customer.totalSpent}}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="customer-details" *ngIf="selectedCustomer">
+      <h3>{{selectedCustomer.name}}</h3>
+      
+      <div class="tabs">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#overview">Overview</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#interactions">Interactions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#notes">Notes</a>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="overview">
+            <div class="customer-overview">
+              <div class="info-grid">
+                <div class="info-item">
+                  <label>Email:</label>
+                  <span>{{selectedCustomer.email}}</span>
+                </div>
+                <div class="info-item">
+                  <label>Phone:</label>
+                  <span>{{selectedCustomer.phone}}</span>
+                </div>
+                <div class="info-item">
+                  <label>Company:</label>
+                  <span>{{selectedCustomer.company}}</span>
+                </div>
+                <div class="info-item">
+                  <label>Status:</label>
+                  <span class="status-badge" [class]="selectedCustomer.status">{{selectedCustomer.status}}</span>
+                </div>
+                <div class="info-item">
+                  <label>Source:</label>
+                  <span>{{selectedCustomer.source}}</span>
+                </div>
+                <div class="info-item">
+                  <label>Total Spent:</label>
+                  <span>KES {{selectedCustomer.totalSpent}}</span>
+                </div>
+              </div>
+
+              <div class="tags">
+                <h5>Tags</h5>
+                <span *ngFor="let tag of selectedCustomer.tags" class="tag">{{tag}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="interactions">
+            <div class="interactions">
+              <div class="send-message">
+                <h5>Send Message</h5>
+                <div class="message-form">
+                  <textarea #messageContent placeholder="Type your message..." class="form-control"></textarea>
+                  <div class="message-actions">
+                    <button class="btn btn-success" (click)="sendMessage(selectedCustomer.id, 'whatsapp', messageContent.value)">
+                      WhatsApp
+                    </button>
+                    <button class="btn btn-primary" (click)="sendMessage(selectedCustomer.id, 'email', messageContent.value)">
+                      Email
+                    </button>
+                    <button class="btn btn-info" (click)="sendMessage(selectedCustomer.id, 'sms', messageContent.value)">
+                      SMS
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="interaction-history">
+                <h5>Interaction History</h5>
+                <div *ngFor="let interaction of selectedCustomer.interactions" class="interaction-item">
+                  <div class="interaction-header">
+                    <span class="type">{{interaction.type}}</span>
+                    <span class="direction" [class]="interaction.direction">{{interaction.direction}}</span>
+                    <span class="date">{{interaction.createdAt | date:'short'}}</span>
+                  </div>
+                  <div class="interaction-content">{{interaction.content}}</div>
+                  <div class="interaction-status">Status: {{interaction.status}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade" id="notes">
+            <div class="notes">
+              <div class="add-note">
+                <textarea #noteContent placeholder="Add a note..." class="form-control"></textarea>
+                <button class="btn btn-primary" (click)="addNote(selectedCustomer.id, noteContent.value)">
+                  Add Note
+                </button>
+              </div>
+
+              <div class="notes-list">
+                <div *ngFor="let note of selectedCustomer.notes" class="note-item">
+                  <div class="note-content">{{note.content}}</div>
+                  <div class="note-meta">{{note.createdAt | date:'short'}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auto-Response Settings -->
+  <div class="auto-response-settings">
+    <h3>Auto-Response Settings</h3>
+    
+    <div class="auto-response-item">
+      <h5>WhatsApp Auto-Response</h5>
+      <div class="form-check">
+        <input 
+          type="checkbox" 
+          [(ngModel)]="autoResponses.whatsapp.enabled"
+          (change)="updateAutoResponse('whatsapp')"
+          class="form-check-input">
+        <label class="form-check-label">Enable WhatsApp auto-response</label>
+      </div>
+      <textarea 
+        [(ngModel)]="autoResponses.whatsapp.message"
+        (blur)="updateAutoResponse('whatsapp')"
+        class="form-control mt-2"
+        placeholder="Auto-response message..."></textarea>
+    </div>
+
+    <div class="auto-response-item">
+      <h5>Email Auto-Response</h5>
+      <div class="form-check">
+        <input 
+          type="checkbox" 
+          [(ngModel)]="autoResponses.email.enabled"
+          (change)="updateAutoResponse('email')"
+          class="form-check-input">
+        <label class="form-check-label">Enable email auto-response</label>
+      </div>
+      <input 
+        type="text" 
+        [(ngModel)]="autoResponses.email.subject"
+        (blur)="updateAutoResponse('email')"
+        class="form-control mt-2"
+        placeholder="Email subject...">
+      <textarea 
+        [(ngModel)]="autoResponses.email.message"
+        (blur)="updateAutoResponse('email')"
+        class="form-control mt-2"
+        placeholder="Auto-response message..."></textarea>
+    </div>
+
+    <div class="auto-response-item">
+      <h5>SMS Auto-Response</h5>
+      <div class="form-check">
+        <input 
+          type="checkbox" 
+          [(ngModel)]="autoResponses.sms.enabled"
+          (change)="updateAutoResponse('sms')"
+          class="form-check-input">
+        <label class="form-check-label">Enable SMS auto-response</label>
+      </div>
+      <textarea 
+        [(ngModel)]="autoResponses.sms.message"
+        (blur)="updateAutoResponse('sms')"
+        class="form-control mt-2"
+        placeholder="Auto-response message..."></textarea>
+    </div>
+  </div>
+</div>

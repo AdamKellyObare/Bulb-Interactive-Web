@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
-import { GalleryModule } from  'ng-gallery';
-import { LightboxModule } from  'ng-gallery/lightbox';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Added ReactiveFormsModule
+import { GalleryModule } from 'ng-gallery';
+import { LightboxModule } from 'ng-gallery/lightbox';
 import { LIGHTBOX_CONFIG } from 'ng-gallery/lightbox';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
@@ -11,8 +11,9 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons';
 import { LightgalleryModule } from 'lightgallery/angular';
 import { LoadingInterceptor } from './loading.interceptor';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common'; // Added CommonModule for date pipe
+import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -46,7 +47,7 @@ import { ListingComponent } from './Listing/listing/listing.component';
 import { ReviewsComponent } from './Home/reviews/reviews.component';
 import { EventDetailsComponent } from './Event/event-details/event-details.component';
 import { PastEventsComponent } from './past-events/past-events.component';
-import { RouterModule } from '@angular/router';
+import { CustomerServiceComponent } from './components/customer-service/customer-service.component'; // Added CustomerServiceComponent
 
 @NgModule({
   declarations: [
@@ -80,18 +81,21 @@ import { RouterModule } from '@angular/router';
     ListingComponent,
     ReviewsComponent,
     EventDetailsComponent,
-    PastEventsComponent
+    PastEventsComponent,
+    CustomerServiceComponent // Added the component to declarations
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA,],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
+    CommonModule, // Added for common directives and pipes (including date pipe)
     SlickCarouselModule,
     GalleryModule,
     LightboxModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule, // Added for more advanced form handling
     ShareButtonsModule,
     ShareIconsModule,
     LightgalleryModule,
